@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>room_pk</title>
+</head>
+<body>
+{% if not not_found %}<h1>{{ room.name }}</h1>
+    <h3>{{ room.country }}/{{ room.city }}</h3>
+    <h4>price : {{ room.price }}</h4>
+    <p>room description : <br/>
+        {{ room.description }}</p>
+    <h5>category : {{ room.category.name }}</h5>
+{% else %}
+    <h1>404 not found</h1>
+{% endif %}
+
+</body>
+</html>

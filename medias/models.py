@@ -13,10 +13,24 @@ class Photo(CommonModel):
         "rooms.Room", on_delete=models.CASCADE, blank=True, null=True,
     )
     experience = models.ForeignKey(
-        "experience.Experience", blank=True, null=True, on_delete=models.CASCADE,
+        "experiences.Experience", blank=True, null=True, on_delete=models.CASCADE,
     )
+
+    def __str__(self):
+        return "Photo File"
 
 
 class Video(CommonModel):
     file = models.FileField()
-    experience = models.OneToOneField(Experience)
+    experience = models.OneToOneField(
+        "experiences.Experience",
+        on_delete=models.CASCADE,
+        blank=True, null=True,
+        related_name="medias",
+    )
+
+    def __str__(self):
+        return "Video File"
+
+
+dead = True

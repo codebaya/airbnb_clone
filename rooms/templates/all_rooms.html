@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>all rooms</title>
+</head>
+<body>
+<h1>all rooms</h1>
+<h2>{{ title }}</h2>
+
+<ul>
+    {% for room in rooms %}
+        <li><a href="/rooms/{{ room.pk }}">
+            {{ room.name }}<br/>
+            {% for amenity in room.amenities.all %}
+                <span> - {{ amenity.name }} <br/></span>
+            {% endfor %}</a>
+        </li>
+    {% endfor %}
+
+</ul>
+
+</body>
+</html>
