@@ -1,0 +1,10 @@
+
+{python:S134 "]Refactor this code to not nest more than 4 "if", "for", "while", "try" and "with" statements.(’©ğ‚8€¡û¤º0
+dpython:S1131$"@Remove the useless trailing whitespaces at the end of this line.(µáÎüÿÿÿÿ8İ†Ÿ¤º0
+dpython:S11310"@Remove the useless trailing whitespaces at the end of this line.(µáÎüÿÿÿÿ8ÓŠƒ¥º0
+gpython:S5797"HReplace this expression; used as a condition it will always be constant.(…ß«”8€¡û¤º0
+gpython:S5797 "HReplace this expression; used as a condition it will always be constant.(’©ğ‚8¡û¤º0
+Lpython:S1481"(Remove the unused local variable "link".(ËÌíÈúÿÿÿÿ8¡û¤º0
+xpython:S3776"TRefactor this function to reduce its Cognitive Complexity from 26 to the 15 allowed.(‘ÁùŒûÿÿÿÿ8¡û¤º0
+Npython:S1656"/Remove or correct this useless self-assignment.(Ö€¸8¡û¤º0
+Spython:S1656!"/Remove or correct this useless self-assignment.(Š„¾Şûÿÿÿÿ8¡û¤º0

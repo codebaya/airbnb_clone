@@ -8,3 +8,12 @@ class CategorySerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Category
 		fields = "__all__"
+
+
+class TinyCategorySerializer(serializers.ModelSerializer):
+	
+	class Meta:
+		model = Category
+		fields = (
+			"name", "kind",
+		)
