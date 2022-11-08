@@ -116,11 +116,13 @@ class RoomDetail(APIView):
 
     def get(self, request, pk):
         room = self.get_object(pk)
+        print("room_names = ", room)
         serializer = RoomDetailSerializer(room, context={"request": request}, )
         return Response(serializer.data)
 
     def put(self, request, pk):
         room = self.get_object(pk)
+        # print("room_names = ", room)
         serializer = RoomDetailSerializer(room, data=request.data, partial=True)
         if serializer.is_valid():
             updated_room = serializer.save()

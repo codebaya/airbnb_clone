@@ -18,7 +18,7 @@ class Experience(CommonModel):
     start = models.TimeField()
     end = models.TimeField()
     description = models.TextField()
-    perks = models.ManyToManyField("experiences.Perk", )
+    perks = models.ManyToManyField("experiences.Perk", blank=True)
     category = models.ForeignKey(
         "categories.Category",
         null=True, blank=True,
