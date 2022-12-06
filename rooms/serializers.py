@@ -12,13 +12,14 @@ class AmenitySerializer(ModelSerializer):
     class Meta:
         model = Amenity
         fields = (
+            "pk",
             "name", "description",
         )
 
 
 class RoomDetailSerializer(ModelSerializer):
     owner = TinyUserSerializer(read_only=True)
-    # amenities = AmenitySerializer(read_only=True, many=True)
+    amenities = AmenitySerializer(read_only=True, many=True)
     category = TinyCategorySerializer(read_only=True, )
 
     rating = serializers.SerializerMethodField()
@@ -31,16 +32,23 @@ class RoomDetailSerializer(ModelSerializer):
         fields = "__all__"
 
     def get_rating(self, room):
-        print(self.context)
         return room.rating()
 
     def get_is_owner(self, room):
         request = self.context['request']
-        return room.owner == request.user
+        if request:
+            return room.owner == request.user
+        return False
 
     def get_is_liked(self, room):
         request = self.context['request']
-        return Wishlist.objects.filter(user=request.user, rooms__pk=room.pk).exists()
+        if request:
+            if request.user.is_authenticated:
+                return Wishlist.objects.filter(
+                    user=request.user,
+                    rooms__pk=room.pk,
+                ).exists()
+        return False
 
 
 def create(self, validated_data):

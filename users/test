@@ -1,0 +1,5 @@
+user_data {'id': 2558432276, 'connected_at':
+ '2022-12-01T17:22:50Z', 'properties':
+ {'nickname': 'Glory', 'profile_image':
+ 'http://k.kakaocdn.net/dn/bP0VZB/btrqiigMQ6x/mxtX8NmhGBzHZQq1bWFG40/img_640x640.jpg', 'thumbnail_image': 'http://k.kakaocdn.net/dn/bP0VZB/btrqiigMQ6x/mxtX8NmhGBzHZQq1bWFG40/img_110x110.jpg'},
+ 'kakao_account': {'profile_nickname_needs_agreement': False, 'profile_image_needs_agreement': False, 'profile': {'nickname': 'Glory', 'thumbnail_image_url': 'http://k.kakaocdn.net/dn/bP0VZB/btrqiigMQ6x/mxtX8NmhGBzHZQq1bWFG40/img_110x110.jpg', 'profile_image_url': 'http://k.kakaocdn.net/dn/bP0VZB/btrqiigMQ6x/mxtX8NmhGBzHZQq1bWFG40/img_640x640.jpg', 'is_default_image': False}, 'has_email': True, 'email_needs_agreement': False, 'is_email_valid': True, 'is_email_verified': True, 'email': 'glorie@kakao.com'}}

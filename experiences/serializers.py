@@ -37,7 +37,7 @@ class CreateExperienceBookingSerializer(ModelSerializer):
     class Meta:
         model = Booking
         fields = (
-            "experience_date", "guests",
+            "experience_time", "guests",
         )
 
     def validate_experience_date(self, value):
@@ -48,7 +48,7 @@ class CreateExperienceBookingSerializer(ModelSerializer):
 
     def validate(self, data):
         if Booking.objects.filter(
-                experience_date=data["experience_date"]
+                experience_date=data["experience_time"]
         ).exists():
             raise serializers.ValidationError(
                 "Those dates are already taken."

@@ -1,3 +1,5 @@
+import time
+
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.utils import timezone
@@ -5,7 +7,7 @@ from rest_framework import status
 from rest_framework.exceptions import NotFound, ParseError
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
-from rest_framework.status import HTTP_204_NO_CONTENT
+from rest_framework.status import HTTP_204_NO_CONTENT, HTTP_400_BAD_REQUEST
 from rest_framework.views import APIView
 
 from bookings.models import Booking
@@ -15,6 +17,7 @@ from medias.serializers import PhotoSerializer
 from reviews.serializers import ReviewSerializer
 from rooms.models import Amenity, Room
 from rooms.serializers import AmenitySerializer, RoomDetailSerializer, RoomListSerializer
+from . import serializers
 
 
 # /api/v1/rooms/Amenities
@@ -24,7 +27,7 @@ class Amenities(APIView):
 
     def get(self, request):
         all_amenities = Amenity.objects.all()
-        serializer = AmenitySerializer(all_amenities, many=True)
+        serializer = serializers.AmenitySerializer(all_amenities, many=True)
         return Response(serializer.data)
 
     def post(self, request, ):
@@ -35,7 +38,7 @@ class Amenities(APIView):
                 AmenitySerializer(amenity).data,
             )
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 
 class AmenityDetail(APIView):
@@ -102,7 +105,7 @@ class Rooms(APIView):
             except:
                 raise ParseError("Amenity not found")
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 
 class RoomDetail(APIView):
@@ -115,9 +118,9 @@ class RoomDetail(APIView):
             raise NotFound
 
     def get(self, request, pk):
+        time.sleep(0.5)
         room = self.get_object(pk)
-        print("room_names = ", room)
-        serializer = RoomDetailSerializer(room, context={"request": request}, )
+        serializer = serializers.RoomDetailSerializer(room, context={"request": request}, )
         return Response(serializer.data)
 
     def put(self, request, pk):

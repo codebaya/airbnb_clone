@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import transaction
 from django.utils import timezone
 from rest_framework.exceptions import NotFound, ParseError, PermissionDenied
@@ -9,7 +10,6 @@ from rest_framework.views import APIView
 from bookings.models import Booking
 from bookings.serializers import PublicBookingSerializer
 from categories.models import Category
-from config import settings
 from experiences.models import Perk, Experience
 from experiences.serializers import PerkSerializer, ExperienceSerializer, ExperienceDetailSerializer, \
     CreateExperienceBookingSerializer
@@ -31,17 +31,17 @@ class Experiences(APIView):
         if serializer.is_valid():
             category_pk = request.data.get('category')
             if not category_pk:
-                raise ParseError
+                raise ParseError("Category is required")
             try:
                 category = Category.objects.get(pk=category_pk)
                 print("category: %s", category)
-                if category.kind == Category.CategoryKindChoices.EXPERIENCE:
-                    raise ParseError
+                if category.kind == Category.CategoryKindChoices.ROOMS:
+                    raise ParseError("The category kind should be experience")
             except Category.DoesNotExist:
-                raise ParseError
+                raise ParseError("Category Not Found")
             try:
                 with transaction.atomic():
-                    experience = serializer.save(owner=request.user, category=category)
+                    experience = serializer.save(host=request.user, category=category)
                     perks = request.data.get('perks')
                     for perks_pk in perks:
                         perk = Perk.objects.get(pk=perks_pk)
@@ -124,7 +124,8 @@ class ExperienceBookings(APIView):
         start = (page - 1) * page_size
         end = start + page_size
         experience = self.get_object(pk)
-        now = timezone.localtime(timezone.now()).date()
+        now = timezone.localtime(timezone.now())
+        print("now: ", now, "type: ", type(now))
         bookings = Booking.objects.filter(
             experience=experience,
             kind=Booking.BookingKindChoices.EXPERIENCE,
@@ -151,7 +152,43 @@ class ExperienceBookings(APIView):
 
 
 class ExperienceBookingsDetail(APIView):
-    pass
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_experience(self, pk):
+        try:
+            return Experience.objects.get(pk=pk)
+        except Experience.DoesNotExist:
+            raise NotFound
+
+    def get_booking(self, pk):
+        try:
+            return Booking.objects.get(pk=pk)
+        except Booking.DoesNotExist:
+            raise NotFound
+
+    def get(self, request, pk, booking_pk):
+        booking = self.get_booking(booking_pk)
+        return Response(PublicBookingSerializer(booking).data)
+
+    def put(self, request, pk, booking_pk):
+        booking = self.get_booking(booking_pk)
+        if booking.user.pk != request.user.pk:
+            raise PermissionDenied
+        serializer = CreateExperienceBookingSerializer(booking, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            booking = serializer.save()
+            serializer = PublicBookingSerializer(booking)
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+
+    def delete(self, request, pk, booking_pk):
+        booking = self.get_booking(booking_pk)
+        if booking.user.pk != request.user.pk:
+            raise PermissionDenied
+        booking.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
 
 
 class Perks(APIView):
