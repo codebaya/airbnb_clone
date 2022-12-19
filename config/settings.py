@@ -15,6 +15,8 @@ from pathlib import Path
 # Don't forget to import dj-database-url at the beginning of the file
 import dj_database_url
 import environ
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # from . import CorsMiddleware
 # from . import corsMiddleware
@@ -222,3 +224,20 @@ GH_CLIENT_ID = env('GH_CLIENT_ID')
 
 CF_ID = env("CF_ID")
 CF_TOKEN = env("CF_TOKEN")
+
+if not DEBUG:
+    sentry_sdk.init(
+        dsn="https://4c8c40fdbb2e4c9095e207a48c887139@o4504358117441536.ingest.sentry.io/4504358119211008",
+        integrations=[
+            DjangoIntegration(),
+        ],
+
+        # Set traces_sample_rate to 1.0 to capture 100%
+        # of transactions for performance monitoring.
+        # We recommend adjusting this value in production.
+        traces_sample_rate=1.0,
+
+        # If you wish to associate users to errors (assuming you are using
+        # django.contrib.auth) you may enable sending PII data.
+        send_default_pii=True
+    )
