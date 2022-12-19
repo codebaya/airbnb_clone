@@ -1,12 +1,12 @@
 databases:
-  - name: airbnbClone
-    databaseName: airbnbClone
-    user: airbnbClone
+  - name: airbnbclone
+    databaseName: airbnbclone
+    user: airbnbclone
     region: singapore
 
 services:
   - type: web
-    name: airbnbClone
+    name: airbnbclone
     env: python
     region: singapore
 
@@ -15,7 +15,7 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: airbnbClone
+          name: airbnbclone
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
