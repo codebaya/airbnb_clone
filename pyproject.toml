@@ -10,6 +10,8 @@ packages = [{ include = "airbnb_clone_backend" }]
 python = "^3.9"
 Django = "~4.0"
 djangorestframework = "^3.14.0"
+strawberry-graphql = { extras = ["debug-server"], version = "^0.130.4" }
+strawberry-graphql-django = "^0.5.1"
 PyJWT = "^2.6.0"
 django-environ = "^0.9.0"
 django-cors-headers = "^3.13.0"
