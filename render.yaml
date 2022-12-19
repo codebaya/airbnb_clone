@@ -1,7 +1,7 @@
 databases:
   - name: airbnbClone
-    databaseName: mysite
-    user: mysite
+    databaseName: airbnbClone
+    user: airbnbClone
     region: singapore
 
 services:
