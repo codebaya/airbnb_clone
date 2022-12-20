@@ -195,7 +195,7 @@ class KakaoLogin(APIView):
                 data={
                     "grant_type": "authorization_code",
                     "client_id": "c2d2fc16a7e706d9736a0f3a418c4513",
-                    "redirect_uri": "http://127.0.0.1:3000/social/kakao",
+                    "redirect_uri": "https://airbnb-frontend-yzk4.onrender.com/social/kakao",
 
                     "code": code,
                 }
