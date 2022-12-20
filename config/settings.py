@@ -191,16 +191,14 @@ REST_FRAMEWORK = {
     ]
 }
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:3000",
-]
+if DEBUG:
+    CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:3000"]
+    CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:3000"]
+else:
+    CORS_ALLOWED_ORIGINS = ["https://airbnb-frontend-yzk4.onrender.com"]
+    CSRF_TRUSTED_ORIGINS = ["https://airbnb-frontend-yzk4.onrender.com"]
 # SECURE_SSL_REDIRECT = False
 CORS_ALLOW_CREDENTIALS = True
-# Origins from client-side
-
-CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:3000"]
-# XSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:3000/"]
-
 CORS_ALLOW_METHODS = [
     "DELETE",
     "GET",
